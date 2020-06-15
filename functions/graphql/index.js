@@ -2,7 +2,7 @@ const { ApolloServer, gql } = require('apollo-server-lambda');
 const faunadb = require('faunadb');
 const q = faunadb.Query;
 
-var client = new faunadb.Client({ secret: process.env.Fauna });
+var client = new faunadb.Client({ secret: process.env.FAUNA });
 
 const typeDefs = gql`
   type Query {
@@ -62,13 +62,11 @@ const resolvers = {
         throw new Error('Must be authenticated to insert todos');
       }
       const results = await client.query(
-        q.Update(
-          q.Ref(q.Ref(q.Collection('todos'), id), {
-            data: {
-              done: true,
-            },
-          })
-        )
+        q.Update(q.Ref(q.Collection('todos'), id), {
+          data: {
+            done: true,
+          },
+        })
       );
       return {
         ...results.data,
