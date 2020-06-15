@@ -1,3 +1,5 @@
 .cache
 public
 node_modules
+.envrc
+functions/graphql/node_modules
