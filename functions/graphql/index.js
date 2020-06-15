@@ -10,7 +10,7 @@ const typeDefs = gql`
     done: Boolean!
   }
   type Mutation {
-    addTodo(text): Todo
+    addTodo(text: String!): Todo
     updateTodoDone(id: ID!): Todo
   }
 `;
@@ -29,6 +29,7 @@ const resolvers = {
       todoIndex++;
       const id = `key-${todoIndex}`;
       todos[id] = { id, text, done: false };
+      return todos[id];
     },
     updateTodoDone: (_, { id }) => {
       todos[id].done = true;
