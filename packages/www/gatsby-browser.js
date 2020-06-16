@@ -23,7 +23,8 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: '/.netlify/functions/graphql',
+  uri:
+    'https://blakes-serverless-todo-netlify-fauna.netlify.app/.netlify/functions/graphql',
 });
 
 const client = new ApolloClient({
