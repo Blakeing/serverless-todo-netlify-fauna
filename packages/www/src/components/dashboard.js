@@ -72,7 +72,7 @@ export default () => {
         </NavLink>
         {user && (
           <NavLink
-            href="#!"
+            href="/"
             p={2}
             onClick={() => {
               netlifyIdentity.logout();
