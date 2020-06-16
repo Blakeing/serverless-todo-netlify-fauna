@@ -2,11 +2,17 @@ const { ApolloServer, gql } = require('apollo-server-lambda');
 const faunadb = require('faunadb');
 const q = faunadb.query;
 
-var client = new faunadb.Client({ secret: process.env.FAUNA });
+var client = new faunadb.Client({ secret: process.env.FAUNA_SERVER_KEY });
 
 const typeDefs = gql`
+  type User {
+    netlifyID: ID!
+    stripeID: ID!
+  }
   type Query {
     todos: [Todo]!
+    getUserByNetlifyID(netlifyID: ID!): User!
+    getUserByStripeID(stripeID: ID!): User!
   }
   type Todo {
     id: ID!

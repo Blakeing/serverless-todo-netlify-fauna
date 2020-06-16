@@ -6,6 +6,8 @@
   "dependencies": {
     "apollo-server-lambda": "^2.14.4",
     "faunadb": "^2.14.2",
-    "graphql": "^15.1.0"
+    "graphql": "^15.1.0",
+    "node-fetch": "^2.6.0",
+    "stripe": "^8.63.0"
   }
 }
