@@ -28,7 +28,7 @@ const resolvers = {
         return [];
       } else {
         const results = await client.query(
-          q.Paginate(q.Match(q.Index('todos_by_user'), 'user-test'))
+          q.Paginate(q.Match(q.Index('todos_by_user'), user))
         );
         return results.data.map(([ref, text, done]) => ({
           id: ref.id,
