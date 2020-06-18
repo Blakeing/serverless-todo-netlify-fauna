@@ -3,3 +3,4 @@ public
 node_modules
 .envrc
 functions/graphql/node_modules
+.DS_Store

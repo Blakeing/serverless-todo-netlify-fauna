@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useReducer } from 'react';
+import React, { useContext, useRef, useReducer, useEffect } from 'react';
 import {
   Container,
   Flex,
@@ -62,6 +62,24 @@ export default () => {
   const [updateTodoDone] = useMutation(UPDATE_TODO_DONE);
   const { loading, error, data, refetch } = useQuery(GET_TODOS);
 
+  useEffect(() => {
+    getPremiumContent();
+  });
+
+  const getPremiumContent = async () => {
+    await fetch('/.netlify/functions/get-premium-content', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${user.token.access_token}`,
+      },
+    })
+      .then((res) => res.text())
+      .then((content) => {
+        document.querySelector('#premium').innerText = content;
+      })
+      .catch((err) => console.error(err));
+  };
+
   function redirectToManage() {
     fetch('/.netlify/functions/create-manage-link', {
       method: 'POST',
@@ -98,6 +116,10 @@ export default () => {
         )}
       </Flex>
       <Flex sx={{ marginTop: 2, marginBottom: 4 }}>
+        {user.app_metadata.roles}
+      </Flex>
+
+      <Flex sx={{ marginTop: 2, marginBottom: 4 }}>
         <Button
           onClick={() => {
             redirectToManage();
@@ -106,6 +128,10 @@ export default () => {
           Manage Account
         </Button>
       </Flex>
+      <Flex>
+        <div id="premium"></div>
+      </Flex>
+
       <Flex
         as="form"
         onSubmit={async (e) => {
