@@ -61,6 +61,21 @@ export default () => {
   const [addTodo] = useMutation(ADD_TODO);
   const [updateTodoDone] = useMutation(UPDATE_TODO_DONE);
   const { loading, error, data, refetch } = useQuery(GET_TODOS);
+
+  function redirectToManage() {
+    fetch('/.netlify/functions/create-manage-link', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${user.token.access_token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((link) => {
+        window.location.href = link;
+      })
+      .catch((err) => console.error(JSON.stringify(err, null, 2)));
+  }
+
   return (
     <Container>
       <Flex as="nav">
@@ -82,6 +97,15 @@ export default () => {
           </NavLink>
         )}
       </Flex>
+      <Flex sx={{ marginTop: 2, marginBottom: 4 }}>
+        <Button
+          onClick={() => {
+            redirectToManage();
+          }}
+        >
+          Manage Account
+        </Button>
+      </Flex>
       <Flex
         as="form"
         onSubmit={async (e) => {
@@ -92,7 +116,6 @@ export default () => {
         }}
       >
         <Label sx={{ display: 'flex' }}>
-          <span>Add&nbsp;Todo</span>
           <Input ref={inputRef} sx={{ marginLeft: 1 }} />
         </Label>
         <Button sx={{ marginLeft: 1 }}>Submit</Button>
